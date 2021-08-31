@@ -3,22 +3,30 @@ import {
   KeyboardArrowUpRounded,
 } from "@material-ui/icons";
 import { NextPage } from "next";
-import React from "react";
+import React, { useState } from "react";
 import styles from "./CountriesTable.module.css";
 
-const orderBy = (countries, value, direction) => {
+interface CountriesTableProps {
+  countries: Array<any>;
+}
+
+type OrderFormat = "asc" | "desc" | null;
+type ValueFormat = "name" | "population" | "area" | "gini";
+
+const orderBy = (countries: Array<any>, value: any, direction: OrderFormat) => {
   if (direction === "asc") {
     return [...countries].sort((a, b) => (a[value] > b[value] ? 1 : -1));
   }
 
   if (direction === "desc") {
     return [...countries].sort((a, b) => (a[value] > b[value] ? -1 : 1));
+    // return [...countries].sort((a, b) => console.log(a[value] > b[value] ? 1:-1));
   }
 
   return countries;
 };
 
-const SortArrow = ({ direction }) => {
+const SortArrow = ({ direction }: any) => {
   if (!direction) {
     return <></>;
   }
@@ -38,30 +46,71 @@ const SortArrow = ({ direction }) => {
   }
 };
 
-interface CountriesTableProps {
-  countries: Array<any>;
-}
-
 const CountriesTable: NextPage<CountriesTableProps> = ({ countries }) => {
+  const [direction, setDirection] = useState<OrderFormat>();
+  const [value, setValue] = useState<ValueFormat>();
+
+  const orderedCountries = orderBy(countries, value, direction!);
+
+  const switchDirection = () => {
+    if (!direction) {
+      setDirection("desc");
+    } else if (direction === "desc") {
+      setDirection("asc");
+    } else {
+      setDirection(null);
+    }
+  };
+
+  const setValueAndDirection = (value: ValueFormat) => {
+    switchDirection();
+    setValue(value);
+  };
+
   return (
     <div>
       <div className={styles.heading}>
-        <button className={styles.heading_name}>Name</button>
-        <button className={styles.heading_population}>Population</button>
+        <button
+          className={styles.heading_name}
+          onClick={() => setValueAndDirection("name")}>
+          Name
+          {value === "name" && <SortArrow direction={direction} />}
+        </button>
+
+        <button
+          className={styles.heading_population}
+          onClick={() => setValueAndDirection("population")}>
+          Population
+          {value === "population" && <SortArrow direction={direction} />}
+        </button>
+
+        <button
+          className={styles.heading_area}
+          onClick={() => setValueAndDirection("area")}>
+          Area (km<sup style={{ fontSize: "0.5rem" }}>2</sup>)
+          {value === "area" && <SortArrow direction={direction} />}
+        </button>
+
+        <button
+          className={styles.heading_gini}
+          onClick={() => setValueAndDirection("gini")}>
+          Gini
+          {value === "gini" && <SortArrow direction={direction} />}
+        </button>
       </div>
-      {countries.map((country) => (
+      {orderedCountries.map((country) => (
         <div key={country.name} className={styles.row}>
-          <div className={styles.imageBox}>
+          <div className={styles.flag}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={country.flag} alt={country.name} />
           </div>
+          <div className={styles.name}>{country.name}</div>
 
-          <h3 className={styles.name}>{country.name}</h3>
-          <p className={styles.population}>{country.population}</p>
-          <p className={styles.area}>{country.area}</p>
-          {/* <p className={styles.gini}>
-            {!country.gini ? "0%" : `${country.gini}%`}
-          </p> */}
+          <div className={styles.population}>{country.population}</div>
+
+          <div className={styles.area}>{country.area || 0}</div>
+
+          <div className={styles.gini}>{country.gini || 0} %</div>
         </div>
       ))}
     </div>

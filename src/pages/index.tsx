@@ -11,7 +11,7 @@ interface HomeProps {
 const Home: NextPage<HomeProps> = ({ countries }) => {
   return (
     <Layout title={"Wranker"}>
-      <div className={styles.count}>Found {countries.length}</div>
+      <div className={styles.counts}>Found {countries.length}</div>
       <SearchInput placeholder='Search Country' />
       <CountriesTable countries={countries} />
     </Layout>
