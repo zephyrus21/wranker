@@ -1,0 +1,13 @@
+.count {
+  color: var(--text-color-secondary);
+  margin: 12px 0px;
+}
+.main {
+  width: 70%;
+  margin: 0px auto;
+}
+@media (max-width: 720px) {
+  .main {
+    width: 95%;
+  }
+}
