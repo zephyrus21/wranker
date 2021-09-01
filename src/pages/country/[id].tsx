@@ -15,7 +15,7 @@ const getCountry = async (id: any) => {
 };
 
 const Country: React.FC<CountryProps> = ({ country }) => {
-  const [borders, setBorders] = useState<any>([]);
+  const [borders, setBorders] = useState<Array<any>>([]);
 
   const getBorders = async () => {
     const borders = await Promise.all(
