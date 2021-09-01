@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
 import Layout from "../../components/Layout/Layout";
 import styles from "./Country.module.css";
 
@@ -97,16 +98,15 @@ const Country: React.FC<CountryProps> = ({ country }) => {
               </div>
 
               <div className={styles.details_panel_borders_container}>
-                {borders.map(({ flag, name }: any) => (
-                  <div
-                    key={name}
-                    className={styles.details_panel_borders_country}>
-                    <img src={flag} alt={name}></img>
-
-                    <div className={styles.details_panel_borders_name}>
-                      {name}
+                {borders.map(({ flag, name, alpha3Code }: any) => (
+                  <Link href={`/country/${alpha3Code}`} key={name}>
+                    <div className={styles.details_panel_borders_country}>
+                      <img src={flag} alt={name}></img>
+                      <div className={styles.details_panel_borders_name}>
+                        {name}
+                      </div>
                     </div>
-                  </div>
+                  </Link>
                 ))}
               </div>
             </div>
