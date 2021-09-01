@@ -28,7 +28,7 @@ const Country: React.FC<CountryProps> = ({ country }) => {
 
   useEffect(() => {
     getBorders();
-  }, []);
+  }, [borders]);
 
   return (
     <Layout title={country.name}>
