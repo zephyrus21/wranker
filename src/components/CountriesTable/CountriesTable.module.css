@@ -46,6 +46,7 @@
 }
 
 .row {
+  cursor: pointer;
   display: flex;
   padding: 20px;
   align-items: center;

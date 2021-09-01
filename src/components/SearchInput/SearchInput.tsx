@@ -5,6 +5,7 @@ import styles from "./SearchInput.module.css";
 
 interface SearchInputProps {
   placeholder: string;
+  onChange: any;
 }
 
 const SearchInput: NextPage<SearchInputProps> = (rest) => {

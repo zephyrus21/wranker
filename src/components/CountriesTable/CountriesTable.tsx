@@ -1,9 +1,10 @@
+import React, { useState } from "react";
 import {
   KeyboardArrowDownRounded,
   KeyboardArrowUpRounded,
 } from "@material-ui/icons";
 import { NextPage } from "next";
-import React, { useState } from "react";
+import Link from "next/link";
 import styles from "./CountriesTable.module.css";
 
 interface CountriesTableProps {
@@ -99,19 +100,21 @@ const CountriesTable: NextPage<CountriesTableProps> = ({ countries }) => {
         </button>
       </div>
       {orderedCountries.map((country) => (
-        <div key={country.name} className={styles.row}>
-          <div className={styles.flag}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={country.flag} alt={country.name} />
+        <Link href={`/country/${country.alpha3Code}`} key={country.name}>
+          <div className={styles.row}>
+            <div className={styles.flag}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={country.flag} alt={country.name} />
+            </div>
+            <div className={styles.name}>{country.name}</div>
+
+            <div className={styles.population}>{country.population}</div>
+
+            <div className={styles.area}>{country.area || 0}</div>
+
+            <div className={styles.gini}>{country.gini || 0} %</div>
           </div>
-          <div className={styles.name}>{country.name}</div>
-
-          <div className={styles.population}>{country.population}</div>
-
-          <div className={styles.area}>{country.area || 0}</div>
-
-          <div className={styles.gini}>{country.gini || 0} %</div>
-        </div>
+        </Link>
       ))}
     </div>
   );
