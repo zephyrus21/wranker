@@ -34,7 +34,7 @@ const Home: NextPage<HomeProps> = ({ countries }) => {
 };
 
 export const getStaticProps = async () => {
-  const res = await fetch("https://restcountries.eu/rest/v2/all");
+  const res = await fetch("https://restcountries.com/v2/all");
   const countries = await res.json();
 
   return {

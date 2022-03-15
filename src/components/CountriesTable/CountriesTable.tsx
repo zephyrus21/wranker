@@ -100,7 +100,7 @@ const CountriesTable: NextPage<CountriesTableProps> = ({ countries }) => {
         </button>
       </div>
       {orderedCountries.map((country) => (
-        <Link href={`/country/${country.alpha3Code}`} key={country.name}>
+        <Link href={`/alpha/${country.alpha3Code}`} key={country.name}>
           <div className={styles.row}>
             <div className={styles.flag}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -112,7 +112,6 @@ const CountriesTable: NextPage<CountriesTableProps> = ({ countries }) => {
 
             <div className={styles.area}>{country.area || 0}</div>
 
-            <div className={styles.gini}>{country.gini || 0} %</div>
           </div>
         </Link>
       ))}
